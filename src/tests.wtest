@@ -1,6 +1,27 @@
+import example.*
 
-test "testX" {
-
-	assert.that(true)
-
+describe "Tests mensajeria" {	
+	const alf = new Usuario(memoriaTotal = 100, nombre = "Alfo")
+	const mensaje = new Texto(texto = "Hola", emisor = alf)
+	const chat = new Chat()
+	
+	method initialize() {
+		chat.agregarParticipante(alf)
+	}
+	
+	test "Peso mensaje de texto" {	
+		assert.equals(10.2, mensaje.peso())
+	}
+	
+	test "Enviar un mensaje" {
+		chat.recibir(mensaje)
+		assert.equals(1, chat.cantidadMensajes())
+		assert.equals(89.8, alf.espacioLibre())
+		assert.equals(1, alf.notificacionesSinLeer().size())
+	}
+	
+	test "Validaciones de un chat" {
+		const otroChat = new Chat()
+		assert.throwsException({ otroChat.recibir(mensaje) })
+	}
 }
